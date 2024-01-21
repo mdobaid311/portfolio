@@ -1,0 +1,16 @@
+@import "node_modules/modern-normalize/modern-normalize.css";
+
+:root {
+  --color-dark: #0e0e0e;
+  --color-light: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-dark);
+}

@@ -1,0 +1,23 @@
+.intro-loader-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
+.reveal-text-animator {
+  font-size:30px ;
+  animation: 1s ease-out 0s 1 reveal-text-animator;
+}
+
+@keyframes reveal-text-animator {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
