@@ -13,13 +13,17 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.1.0",
     "framer-motion": "^10.18.0",
+    "gsap": "^3.6.1",
+    "lodash.throttle": "^4.1.1",
     "modern-normalize": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.70.0",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "splitting": "^1.0.6"
   },
   "devDependencies": {
+    "@types/lodash.throttle": "^4.1.9",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

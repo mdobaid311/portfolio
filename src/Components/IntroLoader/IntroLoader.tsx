@@ -5,40 +5,46 @@ interface IProps {
   setLoading: (loading: boolean) => void;
 }
 
-const IntroLoader = ({ setLoading }: IProps) => {
+const IntroLoader: React.FC<IProps> = ({ setLoading }) => {
   const [currentHello, setCurrentHello] = useState("Hello");
   const [currentHelloIndex, setCurrentHelloIndex] = useState(0);
 
   useEffect(() => {
-    const hello_array = [
+    const helloArray = [
       "Hola",
+      "السلام عليكم",
       "Bonjour",
+      "こんにちは",
       "Ciao",
-      "Konnichiwa",
-      "Salaam",
-      "Merhaba",
-      "Nǐ hǎo",
+      "مرحبًا",
       "Hallo",
-      "Shalom",
+      "你好",
+      "Olá",
+      "Привет",
+      "Shalom"
     ];
-    const interval = setInterval(() => {
-      if (currentHelloIndex < hello_array.length) {
-        setCurrentHello(hello_array[currentHelloIndex]);
-        setCurrentHelloIndex(currentHelloIndex + 1);
+
+    const intervalDuration = 150;
+
+    const updateHello = () => {
+      if (currentHelloIndex < helloArray.length) {
+        setCurrentHello(helloArray[currentHelloIndex]);
+        console.log(helloArray[currentHelloIndex]);
+        setCurrentHelloIndex((prevIndex) => prevIndex + 1);
+      } else {
+        setLoading(false);
       }
-      if (currentHelloIndex === hello_array.length) {
-        setTimeout(() => {
-          setLoading(false);
-        }, 200);
-      }
-    }, 150);
+    };
+
+    const interval = setInterval(updateHello, intervalDuration);
 
     return () => clearInterval(interval);
   }, [currentHelloIndex, setLoading]);
 
   return (
     <div className="intro-loader-container">
-      <span className="reveal-text-animator">• {currentHello}</span>
+      <span className="reveal-text-animator"></span>
+      <span className="hello">• {currentHello}</span>
     </div>
   );
 };

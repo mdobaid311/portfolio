@@ -1,5 +1,5 @@
 import Hero from "../Components/Hero/Hero";
-import "./LandingPage.scss"
+import "./LandingPage.scss";
 
 const LandingPage = () => {
   return (

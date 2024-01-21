@@ -2,6 +2,7 @@ import ParticlesContainer from "../../Common/ParticlesContainer";
 import "./Hero.scss";
 import logo from "../../assets/logo-illustrator.svg";
 import { motion } from "framer-motion";
+import Spotlight from "../SpotlightTitle/Spotlight";
 
 const Hero = () => {
   return (
@@ -32,13 +33,13 @@ const Hero = () => {
       </header>
 
       <div className="hero__content">
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          Mohammed Obaid
-        </motion.h1>
+          <Spotlight text="Mohammed Obaid" />
+        </motion.div>
         <motion.h3
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,6 +51,7 @@ const Hero = () => {
           {["FB", "IG", "LI", "X", "YT"].map((link) => {
             return (
               <motion.li
+                key={link}
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5 }}
@@ -72,9 +74,9 @@ const Hero = () => {
         <path
           d="M20 37V19M24 33L20 37L24 33ZM20 37L16 33L20 37Z"
           stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </section>
