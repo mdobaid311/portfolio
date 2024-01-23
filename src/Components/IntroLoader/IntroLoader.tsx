@@ -29,7 +29,6 @@ const IntroLoader: React.FC<IProps> = ({ setLoading }) => {
     const updateHello = () => {
       if (currentHelloIndex < helloArray.length) {
         setCurrentHello(helloArray[currentHelloIndex]);
-        console.log(helloArray[currentHelloIndex]);
         setCurrentHelloIndex((prevIndex) => prevIndex + 1);
       } else {
         setLoading(false);
