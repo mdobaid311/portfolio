@@ -2,6 +2,7 @@ import gsap from "gsap";
 import throttle from "lodash.throttle";
 import { useEffect } from "react";
 import "./Spotlight.scss";
+import { motion } from "framer-motion";
 
 interface IProps {
   text: string;
@@ -46,32 +47,44 @@ const Spotlight = ({ text }: IProps) => {
   return (
     <div
       className="wrapper"
-    //   onMouseLeave={() => {
-    //     gsap.to("[data-hero]", {
-    //       "--maskSize1": "0%",
-    //       ease: "back.out(2)",
-    //     });
-    //   }}
-    //   onMouseEnter={() => {
-    //     gsap.to("[data-hero]", {
-    //       "--maskSize1": "20%",
-    //       ease: "back.out(2)",
-    //     });
-    //   }}
+      onMouseLeave={() => {
+        gsap.to("[data-hero]", {
+          "--maskSize1": "0%",
+          ease: "back.out(2)",
+        });
+      }}
+      onMouseEnter={() => {
+        gsap.to("[data-hero]", {
+          "--maskSize1": "20%",
+          ease: "back.out(2)",
+        });
+      }}
     >
       <div className="hero hero--primary">
         <div className="container">
-          <h1 className="hero__heading" data-splitting>
+          <motion.h1
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            transition={{delay:.5, duration: 1.5 }}
+            className="hero__heading"
+            data-splitting
+          >
             {text}
-          </h1>
+          </motion.h1>
         </div>
       </div>
 
       <div className="hero hero--secondary" aria-hidden="true" data-hero>
         <div className="container">
-          <h1 className="hero__heading" data-splitting>
+          <motion.h1
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            transition={{delay:.5, duration: 1.5 }}
+            className="hero__heading"
+            data-splitting
+          >
             {text}
-          </h1>
+          </motion.h1>
         </div>
       </div>
     </div>

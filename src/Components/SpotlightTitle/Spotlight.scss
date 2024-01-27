@@ -8,10 +8,13 @@
     padding: clamp(1rem, 2vw, 5rem);
     display: flex;
     align-items: center;
+    text-transform: uppercase;
   }
 
   .hero--primary .hero__heading {
     color: var(--color-light);
+    -webkit-text-stroke-width: 1.8px;
+    -webkit-text-stroke-color: black;
   }
 
   .hero--secondary .hero__heading {
@@ -41,6 +44,7 @@
   width: 100%;
   max-width: 84rem;
   margin: 0 auto;
+  overflow: hidden;
 
   .hero__heading {
     font-size: 5rem;

@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 150px;
   align-items: center;
   text-align: center;
   padding-block: 4rem;
@@ -12,38 +13,7 @@
     top: 0;
     left: 0;
     z-index: -1;
-  }
-
-  header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-inline: 4rem;
-
-    nav {
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        font-size: 1.125rem;
-        li {
-          a {
-            text-decoration: none;
-            color: var(--color-light-50);
-            transition: color 0.2s ease-in-out;
-            font-weight: 500;
-          }
-
-          a:hover {
-            color: var(--color-red-1);
-          }
-        }
-      }
-    }
+    height: 50%;
   }
 
   .hero__content,
@@ -92,25 +62,22 @@
   #scroll-icon rect,
   #scroll-icon path {
     stroke: var(--color-red-1);
+    stroke-width: 2px;
+  }
+
+  #scroll-icon path {
+    animation: bounce 1s infinite;
   }
 }
 
-html.lenis {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

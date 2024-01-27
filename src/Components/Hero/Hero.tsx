@@ -1,6 +1,5 @@
 import ParticlesContainer from "../../Common/ParticlesContainer";
 import "./Hero.scss";
-import logo from "../../assets/logo-illustrator.svg";
 import { motion } from "framer-motion";
 import Spotlight from "../SpotlightTitle/Spotlight";
 
@@ -10,27 +9,7 @@ const Hero = () => {
       <div className="hero-background">
         <ParticlesContainer background="#0e0e0e" color="#ffffff" />
       </div>
-      <header>
-        <a href="/">
-          <img src={logo} alt="logo-illustrator" />
-        </a>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Work</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Skills</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
+    
 
       <div className="hero__content">
         <motion.div
@@ -77,6 +56,7 @@ const Hero = () => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className="scroll-icon__arrow"
         />
       </svg>
     </section>
