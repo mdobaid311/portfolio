@@ -9,11 +9,12 @@ import { profile } from "@/lib/data";
 
 const TERMINAL_ROWS = [
   { key: "name", value: "mohammed_obaid" },
-  { key: "role", value: "software_engineer" },
-  { key: "org", value: "smartquip" },
+  { key: "role", value: "software_developer" },
+  { key: "org", value: "smartquip · remote" },
   { key: "base", value: "hyderabad.in" },
+  { key: "edu", value: "b.e._cs — mjcet_2023" },
   { key: "stack", value: "react / next / .net / node" },
-  { key: "focus", value: "distributed_systems + ai_products" },
+  { key: "focus", value: "realtime_pipelines + ai_products" },
   { key: "hireable", value: "true", acid: true },
 ];
 
