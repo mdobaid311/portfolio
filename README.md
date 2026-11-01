@@ -33,7 +33,7 @@ Full-stack software engineer who builds and ships production web applications en
 | --- | --- | --- |
 | **MiniURL** | Distributed URL shortener — 3 microservices, ZooKeeper-generated Base62 codes, Redis cache, MongoDB replica set; deployed on a self-hosted multi-node k8s cluster with HPA and zero-downtime rolling updates | Node.js, MongoDB, Redis, ZooKeeper, Kubernetes |
 | **[Guide Recorder](https://github.com/mdobaid311/documentation-creation-tool)** | Local-first platform that records browser workflows into editable, shareable step-by-step guides — AI step descriptions, redaction, MD/HTML/PDF export | Next.js 16, Chrome MV3, Prisma, Google GenAI |
-| **[Resource Scheduler](https://resource-scheduler-demo.vercel.app/)** | Scheduling board for planning people and resources across time | TypeScript, React |
+| **[Resource Scheduler](https://resource-scheduler-docs.vercel.app/)** | Free, MIT-licensed React scheduler with a resource timeline ([npm](https://www.npmjs.com/package/resource-scheduler), [GitHub](https://github.com/mdobaid311/resource-scheduler)) | TypeScript, React |
 | **[Pins](https://pinsfrontend.vercel.app)** | AI image-generation social platform — prompt-to-image with a shared feed | React, OpenAI, Sanity.io |
 | **[Kafka Microservices](https://github.com/mdobaid311/nodejs-kafka-microservices)** | Event-driven microservices reference build | Node.js, Kafka, Docker |
 | **[The Vim Game](https://github.com/mdobaid311/the-vim-game)** | A browser game that teaches Vim motions through play | JavaScript |

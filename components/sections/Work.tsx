@@ -34,11 +34,14 @@ export default function Work() {
       <div className="project-list border-t border-line">
         {projects.map((project) => {
           const href = project.live ?? project.repo;
-          const Tag = href ? "a" : "div";
+          // A row with extra links cannot be one big <a> (links do not nest), so its
+          // title link stretches over the row instead and the extra links sit on top.
+          const stretched = Boolean(href && project.links);
+          const Tag = href && !stretched ? "a" : "div";
           return (
             <Tag
               key={project.index}
-              {...(href
+              {...(href && !stretched
                 ? { href, target: "_blank", rel: "noopener noreferrer" }
                 : {})}
               className="project-row group relative block overflow-clip border-b border-line"
@@ -53,7 +56,18 @@ export default function Work() {
                 </span>
 
                 <h3 className="display-type text-3xl text-bone transition-colors duration-300 group-hover:text-ink md:text-5xl">
-                  {project.title}
+                  {stretched ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="after:absolute after:inset-0 after:content-['']"
+                    >
+                      {project.title}
+                    </a>
+                  ) : (
+                    project.title
+                  )}
                 </h3>
 
                 <div className="max-w-md">
@@ -81,6 +95,17 @@ export default function Work() {
                       {project.live ? "VISIT →" : "SOURCE →"}
                     </span>
                   )}
+                  {project.links?.map((link) => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative z-10 underline-offset-4 hover:underline"
+                    >
+                      {link.label} ↗
+                    </a>
+                  ))}
                 </div>
               </div>
             </Tag>

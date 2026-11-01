@@ -38,6 +38,8 @@ export type Project = {
   year: string;
   repo?: string;
   live?: string;
+  /** Extra links shown on the row, beside the main one. */
+  links?: { label: string; href: string }[];
   status: "DEPLOYED" | "SELF-HOSTED" | "IN DEVELOPMENT" | "ARCHIVED";
 };
 
@@ -65,11 +67,15 @@ export const projects: Project[] = [
     index: "03",
     title: "Resource Scheduler",
     description:
-      "A scheduling board for planning people and resources across time — drag, drop, done.",
+      "A free, MIT-licensed React scheduler with a resource timeline: drag, resize, no double booking, keyboard accessible. Published on npm, with docs and live demos.",
     tags: ["TypeScript", "React"],
     year: "2025",
     repo: "https://github.com/mdobaid311/resource-scheduler",
-    live: "https://resource-scheduler-demo.vercel.app/",
+    live: "https://resource-scheduler-docs.vercel.app/",
+    links: [
+      { label: "npm", href: "https://www.npmjs.com/package/resource-scheduler" },
+      { label: "GitHub", href: "https://github.com/mdobaid311/resource-scheduler" },
+    ],
     status: "DEPLOYED",
   },
   {
