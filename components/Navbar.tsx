@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { gsap } from "@/lib/gsap";
 import { scrollToSection } from "@/components/SmoothScroll";
 import { profile } from "@/lib/data";
@@ -55,6 +56,13 @@ export default function Navbar({ started }: { started: boolean }) {
               {link.label}
             </button>
           ))}
+          <Link
+            href="/blog"
+            className="mono-label group flex items-baseline gap-1.5 text-dim transition-colors hover:text-bone"
+          >
+            <span className="text-[9px] text-faint transition-colors group-hover:text-acid">06</span>
+            Blog
+          </Link>
         </nav>
 
         <a

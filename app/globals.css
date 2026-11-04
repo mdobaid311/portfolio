@@ -156,3 +156,25 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- blog post ---------- */
+
+/* No custom cursor on blog pages: keep the native one. */
+.blog-page, .blog-page * { cursor: auto !important; }
+.blog-page a, .blog-page a * { cursor: pointer !important; }
+
+.post { line-height: 1.75; color: var(--color-bone); font-size: 0.9375rem; }
+.post > * + * { margin-top: 1.25rem; }
+.post h2 { font-family: var(--font-archivo), sans-serif; font-weight: 800; font-size: 1.5rem; margin-top: 3rem; letter-spacing: -0.01em; }
+.post a { color: var(--color-acid); text-decoration: underline; text-underline-offset: 3px; }
+.post ul, .post ol { padding-left: 1.5rem; }
+.post ul { list-style: disc; }
+.post ol { list-style: decimal; }
+.post li + li { margin-top: 0.4rem; }
+.post code { font-size: 0.85em; background: var(--color-panel-2); border: 1px solid var(--color-line); padding: 0.1em 0.35em; }
+.post pre { background: var(--color-panel); border: 1px solid var(--color-line); padding: 1rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.6; }
+.post pre code { background: none; border: 0; padding: 0; }
+.post img { width: 100%; height: auto; border: 1px solid var(--color-line); }
+.post table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; display: block; overflow-x: auto; }
+.post th, .post td { border: 1px solid var(--color-line); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+.post th { color: var(--color-dim); }

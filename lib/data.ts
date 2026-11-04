@@ -17,6 +17,7 @@ export const profile = {
     "Clean, swappable architecture is the obsession. Real-time data pipelines and AI-integrated products are the current frontier.",
   ],
   socials: [
+    { label: "Blog", handle: "Read my posts", href: "/blog" },
     { label: "GitHub", handle: "mdobaid311", href: "https://github.com/mdobaid311" },
     { label: "X / Twitter", handle: "@mdobaid311", href: "https://twitter.com/mdobaid311" },
     { label: "Instagram", handle: "@obaid.code", href: "https://www.instagram.com/obaid.code" },
