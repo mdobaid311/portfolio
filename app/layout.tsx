@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "Mohammed Obaid — Full-Stack Software Engineer",
     description:
       "React on the surface, .NET and Node underneath — from pixel to pipeline.",
-    url: "https://mohammedobaid.vercel.app",
+    url: "https://www.mohammedobaid.in",
     siteName: "Mohammed Obaid",
     type: "website",
   },

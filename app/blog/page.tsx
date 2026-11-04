@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Blog — Mohammed Obaid",
   description: "Writing by Mohammed Obaid on building with Next.js, Prisma and AI agents.",
-  alternates: { canonical: "https://mohammedobaid.vercel.app/blog" },
+  alternates: { canonical: "https://www.mohammedobaid.in/blog" },
 };
 
 const posts = [

@@ -4,7 +4,7 @@
 
 **Software Engineer · Full-Stack Developer** — React / .NET / Node.js — Hyderabad, India 🇮🇳
 
-[Portfolio](https://mohammedobaid.vercel.app) · [GitHub](https://github.com/mdobaid311) · [X / Twitter](https://twitter.com/mdobaid311) · [Instagram](https://www.instagram.com/obaid.code) · [mdobaid311@gmail.com](mailto:mdobaid311@gmail.com)
+[Portfolio](https://www.mohammedobaid.in) · [GitHub](https://github.com/mdobaid311) · [X / Twitter](https://twitter.com/mdobaid311) · [Instagram](https://www.instagram.com/obaid.code) · [mdobaid311@gmail.com](mailto:mdobaid311@gmail.com)
 
 </div>
 

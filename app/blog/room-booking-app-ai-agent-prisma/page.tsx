@@ -7,7 +7,7 @@ import { marked } from "marked";
 const TITLE = "How to build a room booking app with an AI agent using the Prisma stack";
 const DESCRIPTION =
   "Twenty-five requests for the same room at the same moment: one booking, twenty-four refusals. Building it from an empty folder to a live URL with an AI coding agent, Prisma ORM, Prisma Postgres and Prisma Compute.";
-const URL = "https://mohammedobaid.vercel.app/blog/room-booking-app-ai-agent-prisma";
+const URL = "https://www.mohammedobaid.in/blog/room-booking-app-ai-agent-prisma";
 
 export const metadata: Metadata = {
   title: `${TITLE} — Mohammed Obaid`,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     type: "article",
     publishedTime: "2026-11-04",
     authors: ["Mohammed Obaid"],
-    images: ["https://mohammedobaid.vercel.app/blog/screenshot-dark.png"],
+    images: ["https://www.mohammedobaid.in/blog/screenshot-dark.png"],
   },
 };
 
