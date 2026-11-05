@@ -1,56 +1,22 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
 import SectionHeading from "@/components/SectionHeading";
 import { trajectory } from "@/lib/data";
 
 export default function Trajectory() {
-  const rootRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      gsap.from(".chapter", {
-        autoAlpha: 0,
-        y: 40,
-        stagger: 0.15,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".chapters", start: "top 80%", once: true },
-      });
-
-      gsap.from(".chapter-spine", {
-        scaleY: 0,
-        duration: 1.4,
-        ease: "power2.inOut",
-        scrollTrigger: { trigger: ".chapters", start: "top 80%", once: true },
-      });
-    },
-    { scope: rootRef }
-  );
-
   return (
     <section
-      ref={rootRef}
       id="trajectory"
       className="relative border-t border-line px-6 py-28 md:px-10 md:py-36"
     >
-      <SectionHeading
-        index="02"
-        kicker="Trajectory — flight log"
-        title="Orbit History"
-        outline
-      />
+      <SectionHeading title="Experience" />
 
-      <div className="chapters relative">
-        <span className="chapter-spine absolute left-0 top-0 hidden h-full w-px origin-top bg-line md:block" />
+      <div className="relative">
+        <span className="absolute left-0 top-0 hidden h-full w-px bg-line md:block" />
 
         <div className="flex flex-col">
           {trajectory.map((chapter) => (
             <article
               key={chapter.index}
-              className="chapter group relative border-b border-line py-10 first:border-t md:py-12 md:pl-14"
+              className="group relative border-b border-line py-10 first:border-t md:py-12 md:pl-14"
             >
               <span className="absolute left-0 top-12 hidden -translate-x-1/2 md:block">
                 <span

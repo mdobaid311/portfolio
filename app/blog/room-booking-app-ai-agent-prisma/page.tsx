@@ -10,7 +10,7 @@ const DESCRIPTION =
 const URL = "https://www.mohammedobaid.in/blog/room-booking-app-ai-agent-prisma";
 
 export const metadata: Metadata = {
-  title: `${TITLE} — Mohammed Obaid`,
+  title: `${TITLE} | Mohammed Obaid`,
   description: DESCRIPTION,
   alternates: { canonical: URL },
   openGraph: {

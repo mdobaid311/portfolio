@@ -1,37 +1,16 @@
-"use client";
-
-import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap";
 import SectionHeading from "@/components/SectionHeading";
+import ProjectVisual from "@/components/ProjectVisual";
 import { projects } from "@/lib/data";
 
 export default function Work() {
-  const rootRef = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      gsap.from(".project-row", {
-        autoAlpha: 0,
-        y: 46,
-        stagger: 0.1,
-        duration: 0.85,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".project-list", start: "top 82%", once: true },
-      });
-    },
-    { scope: rootRef }
-  );
-
   return (
     <section
-      ref={rootRef}
       id="work"
       className="relative border-t border-line px-6 py-28 md:px-10 md:py-36"
     >
-      <SectionHeading index="03" kicker="Work — selected builds" title="Payloads" />
+      <SectionHeading title="Projects" />
 
-      <div className="project-list border-t border-line">
+      <div className="border-t border-line">
         {projects.map((project) => {
           const href = project.live ?? project.repo;
           // A row with extra links cannot be one big <a> (links do not nest), so its
@@ -44,13 +23,13 @@ export default function Work() {
               {...(href && !stretched
                 ? { href, target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="project-row group relative block overflow-clip border-b border-line"
+              className="group relative block overflow-clip border-b border-line"
               data-cursor
             >
               {/* acid flip layer */}
               <span className="absolute inset-0 origin-top scale-y-0 bg-acid transition-transform duration-[420ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-y-100" />
 
-              <div className="relative grid items-baseline gap-3 px-1 py-8 transition-colors duration-300 md:grid-cols-[4rem_minmax(0,1.2fr)_minmax(0,1fr)_auto] md:gap-8 md:py-10">
+              <div className="relative grid items-baseline gap-3 px-1 py-8 transition-colors duration-300 md:grid-cols-[4rem_minmax(0,1.2fr)_minmax(0,1fr)_auto] md:gap-x-8 md:gap-y-6 md:py-10">
                 <span className="mono-label text-faint transition-colors duration-300 group-hover:text-ink/60">
                   /{project.index}
                 </span>
@@ -107,6 +86,12 @@ export default function Work() {
                     </a>
                   ))}
                 </div>
+
+                {project.visual && (
+                  <div className="md:col-span-3 md:col-start-2">
+                    <ProjectVisual visual={project.visual} />
+                  </div>
+                )}
               </div>
             </Tag>
           );
@@ -120,7 +105,7 @@ export default function Work() {
           rel="noopener noreferrer"
           className="mono-label group flex items-center gap-2 text-dim transition-colors hover:text-acid"
         >
-          100+ more in the archive
+          100+ more on GitHub
           <span className="transition-transform duration-300 group-hover:translate-x-1">
             →
           </span>

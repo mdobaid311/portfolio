@@ -14,9 +14,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mohammed Obaid — Full-Stack Software Engineer",
+  title: "Mohammed Obaid | Full-Stack Software Engineer",
   description:
-    "Full-stack software engineer in Hyderabad, India. Building transport & ground-support tech at Smartquip with React and .NET. Distributed systems, self-hosted Kubernetes, and interfaces with intent.",
+    "Full-stack software engineer in Hyderabad, India. Building transport and ground-support tech at Smartquip with React and .NET. Distributed systems and self-hosted Kubernetes.",
   keywords: [
     "Mohammed Obaid",
     "Software Engineer",
@@ -27,14 +27,16 @@ export const metadata: Metadata = {
     "Hyderabad",
   ],
   openGraph: {
-    title: "Mohammed Obaid — Full-Stack Software Engineer",
-    description:
-      "React on the surface, .NET and Node underneath — from pixel to pipeline.",
+    title: "Mohammed Obaid | Full-Stack Software Engineer",
+    description: "React on the surface, .NET and Node underneath.",
     url: "https://www.mohammedobaid.in",
     siteName: "Mohammed Obaid",
     type: "website",
   },
 };
+
+// Runs before paint so a saved light theme never flashes dark.
+const themeScript = `try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -42,7 +44,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${archivo.variable} ${jetbrains.variable} antialiased`}>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${jetbrains.variable} antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body suppressHydrationWarning>{children}</body>
     </html>
   );
