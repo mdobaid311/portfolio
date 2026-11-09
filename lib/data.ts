@@ -25,54 +25,82 @@ export const profile = {
 
 export type Project = {
   title: string;
+  status: string;
   logline: string;
+  points: [label: string, text: string][];
   tags: string[];
-  year: string;
-  href: string;
+  links: { label: string; href: string }[];
+  visual: "miniurl" | "scheduler" | "recorder" | "liliums" | "portfolio";
 };
 
 export const projects: Project[] = [
   {
     title: "MiniURL",
-    logline: "Distributed URL shortener. ZooKeeper-coordinated Base62 codes, Redis cache, MongoDB replica set, on a self-hosted Kubernetes cluster.",
-    tags: ["Node.js", "Redis", "ZooKeeper", "Kubernetes"],
-    year: "2026",
-    href: "https://github.com/mdobaid311/MiniURL",
-  },
-  {
-    title: "Guide Recorder",
-    logline: "Local-first browser workflow recorder. A Chrome extension captures each step; AI writes the guide.",
-    tags: ["Next.js", "Chrome MV3", "Prisma", "GenAI"],
-    year: "2026",
-    href: "https://github.com/mdobaid311/documentation-creation-tool",
+    status: "Self-hosted",
+    logline: "A distributed URL shortener, built to be run rather than demoed.",
+    points: [
+      ["Problem", "Resolve links fast and never hand out the same code twice, even with several instances writing at once."],
+      ["Built", "Three services behind one API. ZooKeeper hands out unique Base62 ranges, Redis caches hot URLs and MongoDB runs as a replica set, with JWT auth, analytics and rate limiting on top."],
+      ["Runs", "On a multi-node Kubernetes cluster I host myself, with autoscaling and zero-downtime rolling updates."],
+    ],
+    tags: ["Node.js", "MongoDB", "Redis", "ZooKeeper", "Kubernetes"],
+    links: [{ label: "GitHub", href: "https://github.com/mdobaid311/MiniURL" }],
+    visual: "miniurl",
   },
   {
     title: "Resource Scheduler",
-    logline: "React scheduler with a resource timeline: drag, resize, no double booking. MIT, on npm.",
-    tags: ["TypeScript", "React", "npm"],
-    year: "2025",
-    href: "https://resource-scheduler-docs.vercel.app/",
+    status: "On npm",
+    logline: "A free React scheduler with a resource timeline. Drag, resize, no double booking.",
+    points: [
+      ["Problem", "Booking screens need rooms, people or machines as rows on a timeline, with overlap rules enforced while you drag."],
+      ["Built", "A React component with drag, resize and move, no-double-booking checks, keyboard support and a headless rules module."],
+      ["Ships", "MIT licensed on npm, with docs and live demos. It powers the room booking app in my blog post."],
+    ],
+    tags: ["TypeScript", "React"],
+    links: [
+      { label: "Docs", href: "https://resource-scheduler-docs.vercel.app/" },
+      { label: "npm", href: "https://www.npmjs.com/package/resource-scheduler" },
+      { label: "GitHub", href: "https://github.com/mdobaid311/resource-scheduler" },
+    ],
+    visual: "scheduler",
   },
   {
-    title: "Pins",
-    logline: "AI image social app. Generate images from prompts and share them on a feed.",
-    tags: ["React", "OpenAI", "Sanity.io"],
-    year: "2023",
-    href: "https://pinsfrontend.vercel.app",
+    title: "Guide Recorder",
+    status: "In development",
+    logline: "Record a browser workflow once, get an editable step-by-step guide.",
+    points: [
+      ["Problem", "Documenting a workflow by hand means screenshotting every click, and the guide is stale the next time the UI changes."],
+      ["Built", "A Chrome MV3 extension streams clicks, input and screenshots to a Next.js backend that writes each step with Google GenAI and redacts sensitive parts."],
+      ["Runs", "Local-first. Edit the guide, then export Markdown, HTML or PDF."],
+    ],
+    tags: ["Next.js", "Chrome MV3", "Prisma", "Google GenAI"],
+    links: [{ label: "GitHub", href: "https://github.com/mdobaid311/documentation-creation-tool" }],
+    visual: "recorder",
   },
   {
-    title: "Kafka Microservices",
-    logline: "Event-driven reference build: producers, consumers and sagas talking through Kafka.",
-    tags: ["Node.js", "Kafka", "Docker"],
-    year: "2025",
-    href: "https://github.com/mdobaid311/nodejs-kafka-microservices",
+    title: "Liliums",
+    status: "Live",
+    logline: "Website for Liliums, a floral studio in Hyderabad.",
+    points: [
+      ["Brief", "Put the bouquets online without the weight of a shop: browse, pick, message."],
+      ["Built", "A catalogue of eight collections and seventy-one bouquets, each in Standard, Deluxe or Premium."],
+      ["Orders", "No checkout. Order opens WhatsApp with the bouquet already named in the message."],
+    ],
+    tags: ["Catalogue", "WhatsApp ordering"],
+    links: [{ label: "liliums.in", href: "https://www.liliums.in" }],
+    visual: "liliums",
   },
   {
-    title: "The Vim Game",
-    logline: "A browser game that teaches Vim motions through play.",
-    tags: ["JavaScript", "Canvas"],
-    year: "2024",
-    href: "https://github.com/mdobaid311/the-vim-game",
+    title: "This portfolio",
+    status: "You are here",
+    logline: "A type-led site with my own desk footage running through it.",
+    points: [
+      ["Built", "Next.js with Tailwind CSS, Motion and Lenis. Static pages, a blog with highlighted code."],
+      ["Detail", "The footage is me at my desk, cut to a 460 KB loop. The headline plays it inline, as a word."],
+    ],
+    tags: ["Next.js", "Tailwind CSS", "Motion", "Lenis"],
+    links: [{ label: "mohammedobaid.in", href: "https://www.mohammedobaid.in" }],
+    visual: "portfolio",
   },
 ];
 

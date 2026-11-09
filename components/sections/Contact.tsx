@@ -31,7 +31,7 @@ export default function Contact() {
         <p className="text-paper/60">Have something that needs building? Write to me.</p>
         <a
           href={`mailto:${profile.email}`}
-          className="display-type mt-5 block break-words text-[clamp(2.25rem,8.2vw,10rem)] transition-colors duration-500 hover:text-accent"
+          className="display-type link-draw mt-5 inline-block break-words pb-[0.06em] text-[clamp(2.25rem,8.2vw,10rem)] [--line:0.05em] hover:text-accent"
         >
           {profile.email}
         </a>

@@ -49,7 +49,7 @@ export default function Hero() {
           <Line delay={0}>I build web software</Line>
           <Line delay={90}>
             end to end,{" "}
-            <span className="inline-block h-[0.74em] w-[2.1em] animate-grow overflow-hidden rounded-full bg-ink align-[-0.04em] [animation-delay:500ms]">
+            <span className="inline-block h-[0.74em] w-[2.1em] animate-grow transition-[width] duration-700 hover:w-[3.4em] overflow-hidden rounded-full bg-ink align-[-0.04em] [animation-delay:500ms]">
               <Footage playing={collect} className="h-full w-full object-cover object-[38%_30%] grayscale" />
             </span>
           </Line>

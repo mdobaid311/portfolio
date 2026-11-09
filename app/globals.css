@@ -66,6 +66,16 @@ body {
   }
 }
 
+/* Underline that draws in from the left on hover. Thickness via --line. */
+@utility link-draw {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% var(--line, 1px) no-repeat;
+  transition: background-size 0.7s var(--ease-out-expo), color 0.3s;
+  &:hover,
+  &:focus-visible {
+    background-size: 100% var(--line, 1px);
+  }
+}
+
 @utility mono-label {
   font-family: var(--font-sans);
   font-size: 0.875rem;
