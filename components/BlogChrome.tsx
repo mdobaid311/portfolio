@@ -1,8 +1,7 @@
 import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
 import { profile } from "@/lib/data";
 
-const link = "mono-label text-dim transition-colors hover:text-acid";
+const link = "mono-label text-muted transition-colors hover:text-accent";
 
 export function BlogHeader({ back }: { back: { href: string; label: string } }) {
   return (
@@ -14,10 +13,9 @@ export function BlogHeader({ back }: { back: { href: string; label: string } }) 
         <Link href="/#work" className={`${link} hidden sm:inline`}>
           Projects
         </Link>
-        <Link href="/#contact" className={`${link} hidden sm:inline`}>
+        <Link href="/#credits" className={`${link} hidden sm:inline`}>
           Contact
         </Link>
-        <ThemeToggle />
       </nav>
     </div>
   );
@@ -25,8 +23,8 @@ export function BlogHeader({ back }: { back: { href: string; label: string } }) 
 
 export function BlogFooter() {
   return (
-    <footer className="mt-24 border-t border-line pt-8">
-      <p className="font-display text-base text-dim">
+    <footer className="mt-24 border-t border-rule pt-8">
+      <p className="font-display text-base text-muted">
         Written by {profile.name}, full-stack engineer at {profile.company}.
       </p>
       <nav aria-label="Footer" className="mt-5 flex flex-wrap gap-x-6 gap-y-3">

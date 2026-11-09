@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
-  axes: ["wdth"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -16,46 +16,24 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Mohammed Obaid | Full-Stack Software Engineer",
   description:
-    "Full-stack software engineer in Hyderabad, India. Building transport and ground-support tech at Smartquip with React and .NET. Distributed systems and self-hosted Kubernetes.",
-  keywords: [
-    "Mohammed Obaid",
-    "Software Engineer",
-    "Full-Stack Developer",
-    "React",
-    "Next.js",
-    ".NET",
-    "Hyderabad",
-  ],
+    "Full-stack software engineer in Hyderabad, India. React and Next.js on the front, .NET and Node.js behind them, event-driven microservices and self-hosted Kubernetes.",
+  keywords: ["Mohammed Obaid", "Software Engineer", "Full-Stack Developer", "React", "Next.js", ".NET", "Hyderabad"],
   openGraph: {
     title: "Mohammed Obaid | Full-Stack Software Engineer",
-    description: "React on the surface, .NET and Node underneath.",
+    description: "I build web software end to end, mostly after dark, from Hyderabad.",
     url: "https://www.mohammedobaid.in",
     siteName: "Mohammed Obaid",
     type: "website",
   },
 };
 
-// Runs before paint so a saved light theme never flashes dark.
-const themeScript = `try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`;
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${archivo.variable} ${jetbrains.variable} antialiased`}
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body suppressHydrationWarning>
+    <html lang="en" className={`${schibsted.variable} ${jetbrains.variable} antialiased`}>
+      <body>
         <a
           href="#main"
-          className="mono-label fixed left-4 top-4 z-[200] -translate-y-20 bg-acid px-4 py-3 text-ink transition-transform focus:translate-y-0"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-ink px-4 py-2 text-sm text-paper transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>

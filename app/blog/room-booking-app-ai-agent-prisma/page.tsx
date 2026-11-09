@@ -98,7 +98,7 @@ function TocList({ toc }: { toc: { id: string; text: string }[] }) {
         <li key={item.id}>
           <a
             href={`#${item.id}`}
-            className="font-display text-sm leading-snug text-dim transition-colors hover:text-acid"
+            className="font-display text-sm leading-snug text-muted transition-colors hover:text-accent"
           >
             {item.text}
           </a>
@@ -118,20 +118,20 @@ export default async function Post() {
       <div className="mt-10 xl:grid xl:grid-cols-[14rem_minmax(0,1fr)] xl:gap-16">
         <aside className="hidden xl:block">
           <nav aria-label="On this page" className="sticky top-10 max-h-[calc(100vh-5rem)] overflow-y-auto">
-            <p className="mono-label text-faint">On this page</p>
+            <p className="mono-label text-muted">On this page</p>
             <TocList toc={toc} />
           </nav>
         </aside>
 
         <div className="min-w-0 max-w-3xl">
           <h1 className="display-type text-4xl md:text-5xl">{TITLE}</h1>
-          <p className="mono-label mt-6 text-dim">
+          <p className="mono-label mt-6 text-muted">
             {post.date} · {post.readTime} · {profile.name}
           </p>
-          <p className="mono-label mt-2 text-faint">{post.tags.join(" · ")}</p>
+          <p className="mono-label mt-2 text-muted">{post.tags.join(" · ")}</p>
 
-          <details className="mt-10 border border-line px-4 xl:hidden">
-            <summary className="mono-label cursor-pointer py-3 text-dim">On this page</summary>
+          <details className="mt-10 border border-rule px-4 xl:hidden">
+            <summary className="mono-label cursor-pointer py-3 text-muted">On this page</summary>
             <nav aria-label="On this page" className="pb-4">
               <TocList toc={toc} />
             </nav>
@@ -139,17 +139,17 @@ export default async function Post() {
 
           <article className="post mt-12" dangerouslySetInnerHTML={{ __html: html }} />
 
-          <aside className="mt-16 border border-line bg-panel p-6 md:p-8">
-            <p className="mono-label text-faint">Building something similar?</p>
+          <aside className="mt-16 border border-rule bg-card p-6 md:p-8">
+            <p className="mono-label text-muted">Building something similar?</p>
             <p className="display-type mt-3 text-2xl md:text-3xl">Let&apos;s talk.</p>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-              <a href={`mailto:${profile.email}`} className="mono-label text-acid hover:underline">
+              <a href={`mailto:${profile.email}`} className="mono-label text-accent hover:underline">
                 Email me →
               </a>
-              <a href={REPO} target="_blank" rel="noopener noreferrer" className="mono-label text-dim transition-colors hover:text-acid">
+              <a href={REPO} target="_blank" rel="noopener noreferrer" className="mono-label text-muted transition-colors hover:text-accent">
                 Source on GitHub ↗
               </a>
-              <Link href="/blog" className="mono-label text-dim transition-colors hover:text-acid">
+              <Link href="/blog" className="mono-label text-muted transition-colors hover:text-accent">
                 More writing →
               </Link>
             </div>

@@ -1,84 +1,57 @@
-import SectionHeading from "@/components/SectionHeading";
-import Corners from "@/components/Corners";
-import { profile } from "@/lib/data";
+"use client";
 
-const TERMINAL_ROWS = [
-  { key: "name", value: "mohammed_obaid" },
-  { key: "role", value: "software_developer" },
-  { key: "org", value: "smartquip · remote" },
-  { key: "base", value: "hyderabad.in" },
-  { key: "edu", value: "b.e._cs, mjcet_2023" },
-  { key: "stack", value: "react / next / .net / node" },
-  { key: "focus", value: "realtime_pipelines + ai_products" },
-  { key: "hireable", value: "true", acid: true },
-];
+import { useEffect, useRef } from "react";
+import { animate, useInView, useReducedMotion } from "motion/react";
+import { EXPO_OUT, profile } from "@/lib/data";
+
+/** Server renders the final number; on scroll-in it counts up from zero. */
+function Count({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!inView || !el || reduce !== false) return;
+    const controls = animate(0, value, {
+      duration: 1.6,
+      ease: EXPO_OUT,
+      onUpdate: (v) => (el.textContent = `${Math.round(v)}${suffix}`),
+    });
+    return () => controls.stop();
+  }, [inView, reduce, value, suffix]);
+
+  return (
+    <span ref={ref} className="tabular-nums text-accent">
+      {value}
+      {suffix}
+    </span>
+  );
+}
 
 export default function About() {
   return (
-    <section
-      id="profile"
-      className="relative border-t border-line px-6 py-28 md:px-10 md:py-36"
-    >
-      <SectionHeading title="About" />
+    <section id="about" className="gutter ">
+      <div className="grid gap-6 border-t border-rule pt-6 md:grid-cols-4">
+        <h2 className="text-sm text-muted">In short</h2>
+        <p className="display-type text-[clamp(1.9rem,4.2vw,4.25rem)] leading-[1.04] tracking-[-0.035em] md:col-span-3">
+          <Count value={3} suffix="+" /> years shipping production code. <Count value={4} /> platforms
+          running in production. <Count value={100} suffix="+" /> public repositories, and{" "}
+          <Count value={1} /> Kubernetes cluster I host myself.
+        </p>
+      </div>
 
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
-        {/* terminal identity card */}
-        <div className="relative self-start border border-line bg-panel p-6 md:p-8">
-          <Corners />
-          <div className="mono-label mb-6 flex items-center justify-between text-faint">
-            <span>identity.log</span>
-            <span className="flex gap-1.5">
-              <span className="size-2 rounded-full bg-faint" />
-              <span className="size-2 rounded-full bg-faint" />
-              <span className="size-2 rounded-full bg-acid" />
+      <div className="mt-24 grid gap-6 border-t border-rule pt-6 md:mt-32 md:grid-cols-4">
+        <h2 className="text-sm text-muted">Tools I reach for</h2>
+        <p className="text-xl leading-relaxed md:col-span-3 md:text-2xl">
+          {profile.stack.map((t, i) => (
+            <span key={t}>
+              {t}
+              {i < profile.stack.length - 1 && <span className="text-muted">, </span>}
             </span>
-          </div>
-          <div className="flex flex-col gap-3 font-mono text-xs md:text-sm">
-            {TERMINAL_ROWS.map((row) => (
-              <div key={row.key} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
-                <span className="shrink-0 text-faint sm:w-24">{row.key}</span>
-                <span className={row.acid ? "text-acid" : "text-bone"}>
-                  {row.value}
-                </span>
-              </div>
-            ))}
-            <div className="mt-2 flex items-center gap-2 text-faint">
-              <span className="text-acid">$</span>
-              <span className="animate-blink inline-block h-4 w-2 bg-acid" />
-            </div>
-          </div>
-        </div>
-
-        {/* bio + stats */}
-        <div>
-          {profile.about.map((para, i) => (
-            <p
-              key={i}
-              className={`font-display leading-relaxed ${
-                i === 0
-                  ? "mb-6 text-xl text-bone md:text-3xl md:leading-snug"
-                  : "mb-6 text-base text-dim md:text-lg"
-              }`}
-            >
-              {para}
-            </p>
           ))}
-
-          <div className="mt-14 grid grid-cols-2 border-l border-t border-line md:grid-cols-4">
-            {profile.stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="border-b border-r border-line p-5 md:p-6"
-              >
-                <div className="display-type text-4xl text-bone md:text-5xl">
-                  {stat.value}
-                  <span className="text-acid">{stat.suffix}</span>
-                </div>
-                <div className="mono-label mt-3 text-faint">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+          <span className="text-muted">.</span>
+        </p>
       </div>
     </section>
   );

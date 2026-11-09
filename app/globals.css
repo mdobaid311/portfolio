@@ -1,99 +1,76 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #060807;
-  --color-panel: #0a0d0b;
-  --color-panel-2: #0e120f;
-  --color-bone: #e9ede4;
-  --color-dim: #a2aa9e;
-  --color-faint: #767e72;
-  --color-acid: #baff39;
-  --color-line: rgba(233, 237, 228, 0.09);
+  --color-paper: #eeebe4;
+  --color-card: #e5e1d8;
+  --color-ink: #121212;
+  --color-muted: #6e6a63;
+  --color-rule: rgba(18, 18, 18, 0.14);
+  --color-accent: #d9381e;
 
-  --font-display: var(--font-archivo);
-  --font-mono: var(--font-jetbrains);
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
-  --animate-blink: blink 1.1s step-end infinite;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --default-transition-timing-function: var(--ease-out-expo);
 
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
+  --animate-rise: rise 1.1s var(--ease-out-expo) both;
+  --animate-grow: grow 1.4s var(--ease-out-expo) both;
+
+  @keyframes rise {
+    from { transform: translateY(105%); }
+  }
+
+  @keyframes grow {
+    from { width: 0; opacity: 0; }
   }
 }
 
-/* Light theme: same tokens, remapped. Toggled with the T key or the navbar button. */
-:root[data-theme="light"] {
-  --color-ink: #f3f1ea;
-  --color-panel: #eae8df;
-  --color-panel-2: #e2dfd5;
-  --color-bone: #111312;
-  --color-dim: #4b514a;
-  --color-faint: #656c61;
-  --color-acid: #456b00;
-  --color-line: rgba(17, 19, 18, 0.12);
-}
-
-/* ---------- base ---------- */
-
 html {
+  background: var(--color-paper);
   scrollbar-width: thin;
-  scrollbar-color: var(--color-faint) var(--color-ink);
+  scrollbar-color: var(--color-muted) var(--color-paper);
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-bone);
-  font-family: var(--font-jetbrains), monospace;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "tnum" 0;
   overflow-x: clip;
 }
 
-/* Visible keyboard focus everywhere (the custom cursor only replaces the mouse pointer). */
 :focus-visible {
-  outline: 2px solid var(--color-acid);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
 ::selection {
-  background: var(--color-acid);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 
-@media (pointer: fine) {
-  body:not(.no-custom-cursor),
-  body:not(.no-custom-cursor) a,
-  body:not(.no-custom-cursor) button {
-    cursor: none;
+@utility display-type {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+/* Side padding that also centres content past 1920px, so full-bleed backgrounds still reach the edges. */
+@utility gutter {
+  padding-inline: max(1.25rem, calc((100% - 1856px) / 2));
+  @media (width >= 48rem) {
+    padding-inline: max(2rem, calc((100% - 1856px) / 2));
   }
 }
 
-/* ---------- type utilities ---------- */
-
-@utility display-type {
-  font-family: var(--font-archivo), sans-serif;
-  font-variation-settings: "wdth" 125;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -0.015em;
-  line-height: 0.92;
-}
-
 @utility mono-label {
-  font-family: var(--font-jetbrains), monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-@utility grid-lines {
-  background-image: linear-gradient(to right, var(--color-line) 1px, transparent 1px);
-  background-size: clamp(64px, 8vw, 120px) 100%;
-}
-
-/* ---------- motion helpers ---------- */
-
-.mask-lines .line {
-  overflow: clip;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -101,6 +78,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
@@ -108,45 +86,35 @@ body {
 
 /* ---------- blog post ---------- */
 
-/* No custom cursor on blog pages: keep the native one. */
-.blog-page, .blog-page * { cursor: auto !important; }
-.blog-page a, .blog-page a * { cursor: pointer !important; }
-
-.post { line-height: 1.8; color: var(--color-bone); font-family: var(--font-archivo), sans-serif; font-size: 1.0625rem; }
+.post { line-height: 1.75; color: var(--color-ink); font-family: var(--font-sans); font-size: 1.125rem; }
 .post > * + * { margin-top: 1.25rem; }
-.post h2 { font-family: var(--font-archivo), sans-serif; font-weight: 800; font-size: 1.75rem; line-height: 1.15; margin-top: 3.5rem; letter-spacing: -0.01em; scroll-margin-top: 2rem; }
-.post h3 { font-weight: 700; font-size: 1.25rem; margin-top: 2rem; }
-.post a { color: var(--color-acid); text-decoration: underline; text-underline-offset: 3px; }
+.post h2 { font-weight: 600; font-size: 1.875rem; line-height: 1.1; margin-top: 3.5rem; letter-spacing: -0.03em; scroll-margin-top: 2rem; }
+.post h3 { font-weight: 600; font-size: 1.3rem; margin-top: 2rem; letter-spacing: -0.02em; }
+.post a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
 .post ul, .post ol { padding-left: 1.5rem; }
 .post ul { list-style: disc; }
 .post ol { list-style: decimal; }
 .post li + li { margin-top: 0.4rem; }
-.post code, .post pre { font-family: var(--font-jetbrains), monospace; }
-.post code { font-size: 0.85em; background: var(--color-panel-2); border: 1px solid var(--color-line); padding: 0.1em 0.35em; }
-.post pre { background: var(--color-panel); border: 1px solid var(--color-line); padding: 1rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.6; }
-.post pre code { background: none; border: 0; padding: 0; font-size: inherit; }
-.post img { width: 100%; height: auto; border: 1px solid var(--color-line); }
+.post code, .post pre { font-family: var(--font-mono); }
+.post code { font-size: 0.8em; background: var(--color-card); padding: 0.1em 0.35em; border-radius: 3px; }
+.post pre { background: #161616; color: #e9e6df; padding: 1rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.6; border-radius: 6px; }
+.post pre code { background: none; padding: 0; font-size: inherit; }
+.post img { width: 100%; height: auto; border: 1px solid var(--color-rule); border-radius: 6px; }
 .post figure { margin-top: 1.75rem; }
-.post figcaption { margin-top: 0.5rem; font-family: var(--font-jetbrains), monospace; font-size: 0.75rem; color: var(--color-dim); }
+.post figcaption { margin-top: 0.5rem; font-size: 0.875rem; color: var(--color-muted); }
 
 /* code blocks: language label and copy button (the button is added by PostEnhancer) */
 .code { position: relative; }
-.code::before { content: attr(data-lang); position: absolute; top: 0.6rem; left: 1rem; font-family: var(--font-jetbrains), monospace; font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-faint); }
+.code::before { content: attr(data-lang); position: absolute; top: 0.6rem; left: 1rem; font-family: var(--font-mono); font-size: 0.6875rem; color: #8d8a83; }
 .code pre { padding-top: 2.25rem; }
-.code .copy { position: absolute; top: 0.35rem; right: 0.5rem; font-family: var(--font-jetbrains), monospace; font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-dim); border: 1px solid var(--color-line); background: var(--color-panel); padding: 0.3rem 0.6rem; }
-.code .copy:hover { color: var(--color-acid); border-color: var(--color-acid); }
-/* shiki dual-theme: both palettes ship as variables, the site theme picks one */
+.code .copy { position: absolute; top: 0.4rem; right: 0.5rem; font-size: 0.75rem; color: #b9b5ad; border: 1px solid #333; background: #1f1f1f; padding: 0.25rem 0.6rem; border-radius: 4px; }
+.code .copy:hover { color: #fff; }
 .shiki, .shiki span { color: var(--shiki-dark); }
-:root[data-theme="light"] .shiki, :root[data-theme="light"] .shiki span { color: var(--shiki-light); }
 
-/* collapsible quick reference */
-.post details.fold { border: 1px solid var(--color-line); padding: 0 1.25rem; }
-.post details.fold summary { cursor: pointer; padding: 1rem 0; font-family: var(--font-jetbrains), monospace; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-dim); }
-.post details.fold summary:hover { color: var(--color-acid); }
-.post details.fold[open] summary { border-bottom: 1px solid var(--color-line); margin-bottom: 1.25rem; }
-.post table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; display: block; overflow-x: auto; }
-.post th, .post td { border: 1px solid var(--color-line); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
-.post th { color: var(--color-dim); }
-
-/* footage is dark; light theme keeps the plain hero */
-:root[data-theme="light"] .hero-video { display: none; }
+.post details.fold { border: 1px solid var(--color-rule); padding: 0 1.25rem; border-radius: 6px; }
+.post details.fold summary { cursor: pointer; padding: 1rem 0; font-weight: 500; color: var(--color-muted); }
+.post details.fold summary:hover { color: var(--color-accent); }
+.post details.fold[open] summary { border-bottom: 1px solid var(--color-rule); margin-bottom: 1.25rem; }
+.post table { width: 100%; border-collapse: collapse; font-size: 0.9rem; display: block; overflow-x: auto; }
+.post th, .post td { border: 1px solid var(--color-rule); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+.post th { color: var(--color-muted); }
