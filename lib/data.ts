@@ -47,6 +47,8 @@ export type Project = {
   links?: { label: string; href: string }[];
   /** Screenshot or diagram shown under the row. */
   visual?: ProjectVisual;
+  /** Short problem / build / run breakdown, shown in a "Case study" disclosure. */
+  caseStudy?: { label: string; text: string }[];
   status: "DEPLOYED" | "SELF-HOSTED" | "IN DEVELOPMENT" | "ARCHIVED";
 };
 
@@ -58,7 +60,22 @@ export const projects: Project[] = [
       "Distributed URL shortener built from three microservices. ZooKeeper hands out collision-free Base62 codes, Redis caches hot URLs and MongoDB runs as a replica set, with JWT auth, analytics and rate limiting on top. Runs on a self-hosted multi-node Kubernetes cluster with autoscaling and zero-downtime rolling updates.",
     tags: ["Node.js", "MongoDB", "Redis", "ZooKeeper", "Kubernetes"],
     year: "2026",
+    repo: "https://github.com/mdobaid311/MiniURL",
     visual: { type: "miniurl" },
+    caseStudy: [
+      {
+        label: "Problem",
+        text: "A short-link service has to resolve links fast and never hand out the same code twice, even with several instances writing at once.",
+      },
+      {
+        label: "What I built",
+        text: "Three microservices behind one API. ZooKeeper coordinates the instances so every Base62 code is unique, Redis caches hot URLs in front of MongoDB, and MongoDB runs as a replica set. JWT auth, click analytics and rate limiting sit on top.",
+      },
+      {
+        label: "How it runs",
+        text: "On a multi-node Kubernetes cluster I host myself, with autoscaling and zero-downtime rolling updates.",
+      },
+    ],
     status: "SELF-HOSTED",
   },
   {
@@ -69,6 +86,20 @@ export const projects: Project[] = [
     tags: ["Next.js 16", "Chrome MV3", "Prisma", "Google GenAI"],
     year: "2026",
     repo: "https://github.com/mdobaid311/documentation-creation-tool",
+    caseStudy: [
+      {
+        label: "Problem",
+        text: "Documenting a workflow by hand means screenshotting and describing every click, and the guide is stale the next time the UI changes.",
+      },
+      {
+        label: "What I built",
+        text: "A Chrome MV3 extension records clicks, input and screenshots and streams them to a Next.js backend. The backend writes each step's description with Google GenAI, redacts sensitive parts of the screenshots, and lets you edit the guide before exporting Markdown, HTML or PDF.",
+      },
+      {
+        label: "How it runs",
+        text: "Local-first: the recording and the guide stay on your machine.",
+      },
+    ],
     status: "IN DEVELOPMENT",
   },
   {
@@ -80,6 +111,20 @@ export const projects: Project[] = [
     year: "2025",
     repo: "https://github.com/mdobaid311/resource-scheduler",
     live: "https://resource-scheduler-docs.vercel.app/",
+    caseStudy: [
+      {
+        label: "Problem",
+        text: "Booking screens need rooms, people or machines as rows on a timeline, with overlap rules the UI enforces while you drag.",
+      },
+      {
+        label: "What I built",
+        text: "A React component with drag, resize and move, no-double-booking checks, keyboard support and a headless rules module, MIT licensed and published on npm with docs and live demos.",
+      },
+      {
+        label: "In use",
+        text: "It powers the room booking app in the screenshot, which I wrote up in the blog post on building it with an AI agent and the Prisma stack.",
+      },
+    ],
     links: [
       { label: "npm", href: "https://www.npmjs.com/package/resource-scheduler" },
       { label: "GitHub", href: "https://github.com/mdobaid311/resource-scheduler" },
@@ -173,15 +218,15 @@ export type SkillGroup = {
   items: string[];
 };
 
+/** The daily drivers, shown first. They are left out of the groups below to avoid repeating. */
+export const coreSkills = ["React", "Next.js", "TypeScript", "Node.js", ".NET / C#", "PostgreSQL"];
+
 export const skillGroups: SkillGroup[] = [
   {
     index: "A",
     label: "Interface",
     items: [
-      "TypeScript",
       "JavaScript",
-      "React 16–19",
-      "Next.js",
       "Angular",
       "Tailwind CSS",
       "Zustand",
@@ -194,9 +239,7 @@ export const skillGroups: SkillGroup[] = [
     index: "B",
     label: "Systems",
     items: [
-      "Node.js",
       ".NET Serverless",
-      "C#",
       "Express",
       "FastAPI",
       "Python",
@@ -210,7 +253,6 @@ export const skillGroups: SkillGroup[] = [
     index: "C",
     label: "Data & Events",
     items: [
-      "PostgreSQL",
       "MongoDB",
       "SQL Server",
       "Redis",

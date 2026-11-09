@@ -48,6 +48,12 @@ body {
   overflow-x: clip;
 }
 
+/* Visible keyboard focus everywhere (the custom cursor only replaces the mouse pointer). */
+:focus-visible {
+  outline: 2px solid var(--color-acid);
+  outline-offset: 3px;
+}
+
 ::selection {
   background: var(--color-acid);
   color: var(--color-ink);
@@ -74,8 +80,8 @@ body {
 
 @utility mono-label {
   font-family: var(--font-jetbrains), monospace;
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
@@ -106,18 +112,41 @@ body {
 .blog-page, .blog-page * { cursor: auto !important; }
 .blog-page a, .blog-page a * { cursor: pointer !important; }
 
-.post { line-height: 1.75; color: var(--color-bone); font-size: 0.9375rem; }
+.post { line-height: 1.8; color: var(--color-bone); font-family: var(--font-archivo), sans-serif; font-size: 1.0625rem; }
 .post > * + * { margin-top: 1.25rem; }
-.post h2 { font-family: var(--font-archivo), sans-serif; font-weight: 800; font-size: 1.5rem; margin-top: 3rem; letter-spacing: -0.01em; }
+.post h2 { font-family: var(--font-archivo), sans-serif; font-weight: 800; font-size: 1.75rem; line-height: 1.15; margin-top: 3.5rem; letter-spacing: -0.01em; scroll-margin-top: 2rem; }
+.post h3 { font-weight: 700; font-size: 1.25rem; margin-top: 2rem; }
 .post a { color: var(--color-acid); text-decoration: underline; text-underline-offset: 3px; }
 .post ul, .post ol { padding-left: 1.5rem; }
 .post ul { list-style: disc; }
 .post ol { list-style: decimal; }
 .post li + li { margin-top: 0.4rem; }
+.post code, .post pre { font-family: var(--font-jetbrains), monospace; }
 .post code { font-size: 0.85em; background: var(--color-panel-2); border: 1px solid var(--color-line); padding: 0.1em 0.35em; }
 .post pre { background: var(--color-panel); border: 1px solid var(--color-line); padding: 1rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.6; }
-.post pre code { background: none; border: 0; padding: 0; }
+.post pre code { background: none; border: 0; padding: 0; font-size: inherit; }
 .post img { width: 100%; height: auto; border: 1px solid var(--color-line); }
+.post figure { margin-top: 1.75rem; }
+.post figcaption { margin-top: 0.5rem; font-family: var(--font-jetbrains), monospace; font-size: 0.75rem; color: var(--color-dim); }
+
+/* code blocks: language label and copy button (the button is added by PostEnhancer) */
+.code { position: relative; }
+.code::before { content: attr(data-lang); position: absolute; top: 0.6rem; left: 1rem; font-family: var(--font-jetbrains), monospace; font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-faint); }
+.code pre { padding-top: 2.25rem; }
+.code .copy { position: absolute; top: 0.35rem; right: 0.5rem; font-family: var(--font-jetbrains), monospace; font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-dim); border: 1px solid var(--color-line); background: var(--color-panel); padding: 0.3rem 0.6rem; }
+.code .copy:hover { color: var(--color-acid); border-color: var(--color-acid); }
+/* shiki dual-theme: both palettes ship as variables, the site theme picks one */
+.shiki, .shiki span { color: var(--shiki-dark); }
+:root[data-theme="light"] .shiki, :root[data-theme="light"] .shiki span { color: var(--shiki-light); }
+
+/* collapsible quick reference */
+.post details.fold { border: 1px solid var(--color-line); padding: 0 1.25rem; }
+.post details.fold summary { cursor: pointer; padding: 1rem 0; font-family: var(--font-jetbrains), monospace; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-dim); }
+.post details.fold summary:hover { color: var(--color-acid); }
+.post details.fold[open] summary { border-bottom: 1px solid var(--color-line); margin-bottom: 1.25rem; }
 .post table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; display: block; overflow-x: auto; }
 .post th, .post td { border: 1px solid var(--color-line); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
 .post th { color: var(--color-dim); }
+
+/* footage is dark; light theme keeps the plain hero */
+:root[data-theme="light"] .hero-video { display: none; }

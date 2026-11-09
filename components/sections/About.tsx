@@ -35,8 +35,8 @@ export default function About() {
           </div>
           <div className="flex flex-col gap-3 font-mono text-xs md:text-sm">
             {TERMINAL_ROWS.map((row) => (
-              <div key={row.key} className="flex gap-3">
-                <span className="w-24 shrink-0 text-faint">{row.key}</span>
+              <div key={row.key} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
+                <span className="shrink-0 text-faint sm:w-24">{row.key}</span>
                 <span className={row.acid ? "text-acid" : "text-bone"}>
                   {row.value}
                 </span>
@@ -54,10 +54,10 @@ export default function About() {
           {profile.about.map((para, i) => (
             <p
               key={i}
-              className={`font-mono leading-relaxed ${
+              className={`font-display leading-relaxed ${
                 i === 0
-                  ? "mb-6 text-lg text-bone md:text-2xl md:leading-relaxed"
-                  : "mb-6 text-sm text-dim md:text-base"
+                  ? "mb-6 text-xl text-bone md:text-3xl md:leading-snug"
+                  : "mb-6 text-base text-dim md:text-lg"
               }`}
             >
               {para}

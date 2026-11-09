@@ -1,12 +1,26 @@
 import SectionHeading from "@/components/SectionHeading";
 import Corners from "@/components/Corners";
-import { skillGroups } from "@/lib/data";
+import { coreSkills, skillGroups } from "@/lib/data";
 
 export default function Arsenal() {
   return (
     <section id="arsenal" className="relative border-t border-line py-28 md:py-36">
       <div className="px-6 md:px-10">
         <SectionHeading title="Skills" />
+
+        <div className="mb-14">
+          <p className="mono-label mb-5 text-faint">Core · what I reach for every day</p>
+          <ul className="flex flex-wrap gap-3">
+            {coreSkills.map((skill) => (
+              <li
+                key={skill}
+                className="display-type border border-acid/40 px-4 py-3 text-lg text-bone transition-colors hover:border-acid hover:text-acid md:text-2xl"
+              >
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className="grid gap-px border-y border-line bg-line px-0 sm:grid-cols-2 xl:grid-cols-4">

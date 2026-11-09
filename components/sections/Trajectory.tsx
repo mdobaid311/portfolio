@@ -41,7 +41,7 @@ export default function Trajectory() {
                 </div>
 
                 <div>
-                  <p className="font-mono text-sm leading-relaxed text-dim">
+                  <p className="font-display text-base leading-relaxed text-dim">
                     {chapter.summary}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">

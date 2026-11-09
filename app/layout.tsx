@@ -52,7 +52,15 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <a
+          href="#main"
+          className="mono-label fixed left-4 top-4 z-[200] -translate-y-20 bg-acid px-4 py-3 text-ink transition-transform focus:translate-y-0"
+        >
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

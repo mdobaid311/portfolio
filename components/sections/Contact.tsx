@@ -5,8 +5,33 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { profile } from "@/lib/data";
 
+function CopyEmail() {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // no clipboard access: the mailto link and the visible address still work
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      className="mono-label w-fit border border-line px-3 py-2 text-dim transition-colors hover:border-acid hover:text-acid"
+    >
+      <span aria-live="polite">{copied ? "Copied ✓" : "Copy email"}</span>
+    </button>
+  );
+}
+
 function LocalClock() {
-  const [time, setTime] = useState("--:--:--");
+  // Real content until the first tick, so the footer never shows a placeholder.
+  const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
     const format = () =>
@@ -26,7 +51,7 @@ function LocalClock() {
     };
   }, []);
 
-  return <span suppressHydrationWarning>{time} IST</span>;
+  return <span suppressHydrationWarning>{time ? `${time} IST` : "Hyderabad · India Standard Time"}</span>;
 }
 
 export default function Contact() {
@@ -100,10 +125,11 @@ export default function Contact() {
             >
               {profile.email}
             </a>
-            <p className="font-mono text-sm text-dim">
-              I&apos;m at {profile.company} today, and open to interesting problems and
-              collaborations.
+            <p className="max-w-md font-display text-base leading-relaxed text-dim">
+              I&apos;m at {profile.company} today. Open to freelance projects and full-time
+              roles with interesting problems.
             </p>
+            <CopyEmail />
           </div>
         </div>
       </div>

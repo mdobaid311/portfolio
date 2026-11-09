@@ -9,12 +9,14 @@ import About from "@/components/sections/About";
 import Trajectory from "@/components/sections/Trajectory";
 import Work from "@/components/sections/Work";
 import Arsenal from "@/components/sections/Arsenal";
+import Writing from "@/components/sections/Writing";
 import Contact from "@/components/sections/Contact";
 
 export default function Site() {
   useEffect(() => {
+    // Keep the browser's own restore for deep links like /#work; otherwise start at the top.
     history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
+    if (!location.hash) window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -23,12 +25,13 @@ export default function Site() {
       <Cursor />
       <Navbar />
 
-      <main>
+      <main id="main">
         <Hero />
-        <About />
-        <Trajectory />
         <Work />
+        <Trajectory />
+        <About />
         <Arsenal />
+        <Writing />
         <Contact />
       </main>
     </>
