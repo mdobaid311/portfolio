@@ -36,7 +36,7 @@ export default function Projects() {
               <p className="mt-8 text-sm text-muted">{p.tags.join(" · ")}</p>
               <p className="mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-8 text-sm font-medium">
                 {p.links.map((l) => (
-                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="link-draw hover:text-accent">
+                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="hit-area link-draw hover:text-accent">
                     {l.label} ↗
                   </a>
                 ))}

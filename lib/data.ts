@@ -96,7 +96,7 @@ export const projects: Project[] = [
     logline: "A type-led site with my own desk footage running through it.",
     points: [
       ["Built", "Next.js with Tailwind CSS, Motion and Lenis. Static pages, a blog with highlighted code."],
-      ["Detail", "The footage is me at my desk, cut to a 460 KB loop. The headline plays it inline, as a word."],
+      ["Detail", "The footage is me at my desk, cut to a 340 KB loop. The headline plays it inline as a word, then opens it to full screen as you scroll."],
     ],
     tags: ["Next.js", "Tailwind CSS", "Motion", "Lenis"],
     links: [{ label: "mohammedobaid.in", href: "https://www.mohammedobaid.in" }],

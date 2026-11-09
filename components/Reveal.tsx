@@ -8,6 +8,7 @@ export default function Reveal({ children, className, delay = 0 }: { children: R
   const reduce = useReducedMotion();
   return (
     <motion.div
+      data-reveal
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}

@@ -69,7 +69,11 @@ const steps = [
 function Recorder() {
   const reduce = useReducedMotion();
   return (
-    <div className="flex h-full items-center justify-center p-6 md:p-10">
+    <div
+      role="img"
+      aria-label="Guide Recorder mock-up: a guide titled How to send an invoice writes itself step by step, with the customer’s email redacted."
+      className="flex h-full items-center justify-center p-6 md:p-10"
+    >
       <div className="w-full max-w-lg rounded-[4px] bg-paper p-5 md:p-7 text-ink shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)]">
         <p className="flex items-center justify-between text-xs text-muted">
           <span className="flex items-center gap-2">
@@ -116,7 +120,11 @@ function Recorder() {
 /** This site, in miniature. */
 function Portfolio() {
   return (
-    <div className="flex h-full flex-col bg-paper p-6 text-ink md:p-10">
+    <div
+      role="img"
+      aria-label="This site in miniature: the headline with the desk footage playing inside it as a word."
+      className="flex h-full flex-col bg-paper p-6 text-ink md:p-10"
+    >
       <div className="flex justify-between text-[0.6rem] text-muted md:text-xs">
         <span className="font-semibold text-ink">Mohammed Obaid</span>
         <span>Work Experience Writing Contact</span>

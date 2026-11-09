@@ -13,7 +13,7 @@ export function BlogHeader({ back }: { back: { href: string; label: string } }) 
         <Link href="/#work" className={`${link} hidden sm:inline`}>
           Projects
         </Link>
-        <Link href="/#credits" className={`${link} hidden sm:inline`}>
+        <Link href="/#contact" className={`${link} hidden sm:inline`}>
           Contact
         </Link>
       </nav>

@@ -4,22 +4,30 @@ import { useEffect, useRef } from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { EXPO_OUT, profile } from "@/lib/data";
 
-/** Server renders the final number; on scroll-in it counts up from zero. */
+/**
+ * Server renders the final number. Numbers worth counting drop to zero while still off screen,
+ * then count up on scroll-in; single digits just stay put.
+ */
 function Count({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
   const reduce = useReducedMotion();
+  const counts = value >= 10 && reduce === false;
 
   useEffect(() => {
     const el = ref.current;
-    if (!inView || !el || reduce !== false) return;
+    if (!el || !counts) return;
+    if (!inView) {
+      el.textContent = `0${suffix}`;
+      return;
+    }
     const controls = animate(0, value, {
-      duration: 1.6,
+      duration: 1.2,
       ease: EXPO_OUT,
       onUpdate: (v) => (el.textContent = `${Math.round(v)}${suffix}`),
     });
     return () => controls.stop();
-  }, [inView, reduce, value, suffix]);
+  }, [inView, counts, value, suffix]);
 
   return (
     <span ref={ref} className="tabular-nums text-accent">

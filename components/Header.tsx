@@ -42,9 +42,9 @@ export default function Header() {
           <br />
           <span className="font-mono text-[0.8rem] tabular-nums">{time ?? "--:--"}</span> local time
         </p>
-        <nav aria-label="Sections" className="flex flex-wrap justify-end gap-x-4 gap-y-1">
+        <nav aria-label="Sections" className="flex flex-wrap justify-end gap-x-4 gap-y-2">
           {links.map(([href, label]) => (
-            <a key={href} href={href} className="transition-colors hover:text-accent">
+            <a key={href} href={href} className="hit-area transition-colors hover:text-accent">
               {label}
             </a>
           ))}
