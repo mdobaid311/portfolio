@@ -1,64 +1,31 @@
-"use client";
+import LitText from "@/components/LitText";
+import { profile } from "@/lib/data";
 
-import { useEffect, useRef } from "react";
-import { animate, useInView, useReducedMotion } from "motion/react";
-import { EXPO_OUT, profile } from "@/lib/data";
-
-/**
- * Server renders the final number. Numbers worth counting drop to zero while still off screen,
- * then count up on scroll-in; single digits just stay put.
- */
-function Count({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const reduce = useReducedMotion();
-  const counts = value >= 10 && reduce === false;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !counts) return;
-    if (!inView) {
-      el.textContent = `0${suffix}`;
-      return;
-    }
-    const controls = animate(0, value, {
-      duration: 1.2,
-      ease: EXPO_OUT,
-      onUpdate: (v) => (el.textContent = `${Math.round(v)}${suffix}`),
-    });
-    return () => controls.stop();
-  }, [inView, counts, value, suffix]);
-
-  return (
-    <span ref={ref} className="tabular-nums text-accent">
-      {value}
-      {suffix}
-    </span>
-  );
-}
+const statement =
+  "3+ years shipping production code. 4 platforms running in production. 100+ public repositories, and 1 Kubernetes cluster I host myself.";
 
 export default function About() {
   return (
-    <section id="about" className="gutter ">
-      <div className="grid gap-6 border-t border-rule pt-6 md:grid-cols-4">
-        <h2 className="text-sm text-muted">In short</h2>
-        <p className="display-type text-[clamp(1.9rem,4.2vw,4.25rem)] leading-[1.04] tracking-[-0.035em] md:col-span-3">
-          <Count value={3} suffix="+" /> years shipping production code. <Count value={4} /> platforms
-          running in production. <Count value={100} suffix="+" /> public repositories, and{" "}
-          <Count value={1} /> Kubernetes cluster I host myself.
-        </p>
+    <section id="about" data-time="02:04" className="gutter pt-[22vh] pb-[18vh]">
+      <div className="grid gap-6 border-t border-line pt-6 md:grid-cols-4">
+        <h2 className="text-sm text-dim">In short</h2>
+        <LitText
+          text={statement}
+          lit={["3+", "4", "100+", "1"]}
+          className="display-type text-statement leading-[1.04] tracking-[-0.035em] text-dim md:col-span-3"
+        />
       </div>
 
-      <div className="mt-24 grid gap-6 border-t border-rule pt-6 md:mt-32 md:grid-cols-4">
-        <h2 className="text-sm text-muted">Tools I reach for</h2>
-        <p className="text-xl leading-relaxed md:col-span-3 md:text-2xl">
+      <div className="mt-24 grid gap-6 border-t border-line pt-6 md:mt-32 md:grid-cols-4">
+        <h2 className="text-sm text-dim">Tools I reach for</h2>
+        <p className="text-lg leading-relaxed text-dim md:col-span-3">
           {profile.stack.map((t, i) => (
             <span key={t}>
-              {t}
-              {i < profile.stack.length - 1 && <span className="text-muted">, </span>}
+              <span className="text-fg">{t}</span>
+              {i < profile.stack.length - 1 && ", "}
             </span>
           ))}
-          <span className="text-muted">.</span>
+          .
         </p>
       </div>
     </section>

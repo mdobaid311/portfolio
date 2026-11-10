@@ -15,6 +15,11 @@ function Line({ children, delay }: { children: React.ReactNode; delay: number })
   );
 }
 
+/** Placeholder the footage window rests on before it opens. */
+function Capsule({ ref }: { ref: React.Ref<HTMLSpanElement> }) {
+  return <span ref={ref} className="inline-block h-[0.74em] w-[2.1em] align-[-0.04em]" />;
+}
+
 const REDUCE = "(prefers-reduced-motion: reduce)";
 const onMotionPref = (cb: () => void) => {
   const m = matchMedia(REDUCE);
@@ -42,7 +47,9 @@ const ZOOM = 0.5;
 export default function Hero() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
-  const slot = useRef<HTMLSpanElement>(null);
+  // The capsule slot exists once per line-break set; only the visible one has a width.
+  const slotWide = useRef<HTMLSpanElement>(null);
+  const slotNarrow = useRef<HTMLSpanElement>(null);
   const frame = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const box = useRef({ x: 0, y: 0, w: 0, h: 0 });
@@ -56,6 +63,7 @@ export default function Hero() {
   const textY = useTransform(scrollYProgress, [0, 0.4], [0, -60]);
   const shadeOpacity = useTransform(scrollYProgress, [0.4, 0.8], [0, 1]);
   const captionOpacity = useTransform(scrollYProgress, [0.75, 0.95], [0, 1]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   const paint = () => {
     const el = frame.current;
@@ -96,7 +104,7 @@ export default function Hero() {
 
     // offsetLeft/Top ignore transforms, so this is where the capsule rests once the headline settles.
     const measure = () => {
-      const s = slot.current;
+      const s = [slotWide.current, slotNarrow.current].find((n) => n && n.offsetWidth > 0);
       if (!s || !stage.current) return;
       let x = 0;
       let y = 0;
@@ -150,39 +158,62 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={section} id="top" className={reduce ? "" : "h-[160vh]"}>
+    <section ref={section} id="top" data-time="18:30" className={reduce ? "" : "relative h-[160vh]"}>
+      {/* The footage is fully open at 80% of the runway (grow), 48vh into this 160vh section: the clock reads about 2 a.m. there. */}
+      {!reduce && <span aria-hidden data-time="02:00" className="absolute inset-x-0 top-[48vh]" />}
       <div ref={stage} className={`relative overflow-hidden ${reduce ? "" : "sticky top-0 h-svh"}`}>
-        <motion.div style={reduce ? undefined : { opacity: textOpacity, y: textY }} className="gutter pb-16 pt-[14vh] md:pt-[18vh]">
-          <h1 className="display-type text-[8.6vw] md:text-[min(7.2vw,138px)]">
-            <Line delay={0}>I build web software</Line>{" "}
-            <Line delay={90}>
-              end to end,{" "}
-              <span ref={slot} aria-hidden className="inline-block h-[0.74em] w-[2.1em] align-[-0.04em]" />
-            </Line>{" "}
-            <Line delay={180}>
-              mostly <em className="font-medium">after dark.</em>
-            </Line>
+        <motion.div style={reduce ? undefined : { opacity: textOpacity, y: textY }} className="gutter @container pb-16 pt-[18vh] md:pt-[16vh]">
+          {/* 13cqi, not 13vw: at 13vw "mostly after dark." wraps to a fifth line on phones. */}
+          <h1 className="display-type text-[13cqi] md:text-hero">
+            <span className="sr-only">I build web software end to end, mostly after dark.</span>
+            <span aria-hidden className="hidden md:block">
+              <Line delay={0}>I build web software</Line>
+              <Line delay={90}>
+                end to end, <Capsule ref={slotWide} />
+              </Line>
+              <Line delay={180}>
+                mostly <em className="font-medium">after dark.</em>
+              </Line>
+            </span>
+            <span aria-hidden className="md:hidden">
+              <Line delay={0}>I build web</Line>
+              <Line delay={60}>software end</Line>
+              <Line delay={120}>
+                to end, <Capsule ref={slotNarrow} />
+              </Line>
+              <Line delay={180}>
+                mostly <em className="font-medium">after dark.</em>
+              </Line>
+            </span>
           </h1>
 
           <div className="mt-12 grid gap-8 text-lg leading-relaxed md:mt-16 md:grid-cols-4 md:gap-6">
-            <p className="flex items-start gap-2.5 text-sm">
-              <span className="relative mt-[0.4em] flex size-2">
-                <span className="absolute inset-0 animate-ping rounded-full bg-accent opacity-60" />
-                <span className="relative size-2 rounded-full bg-accent" />
-              </span>
-              Available for new work
+            {/* The red dot moved to the header LED: one red object on the page. */}
+            <p className="text-sm">Available for new work</p>
+            {/* TODO(confirm): bio wording, B5 copy deck. */}
+            <p className="max-w-[46ch] text-pretty md:col-span-2">
+              Full-stack engineer in Hyderabad. React and Next.js in front, .NET and Node.js behind, Kubernetes underneath. By day
+              I build asset-uptime software for rail, aviation and maritime at Smartquip.
             </p>
-            <p className="max-w-[46ch] text-pretty md:col-span-2">{profile.bio}</p>
             <p className="flex gap-5 text-sm md:justify-end">
-              <a href={`mailto:${profile.email}`} className="hit-area link-draw hover:text-accent">
+              <a href={`mailto:${profile.email}`} className="hit-area link-draw">
                 Email
               </a>
-              <a href="https://github.com/mdobaid311" target="_blank" rel="noopener noreferrer" className="hit-area link-draw hover:text-accent">
-                GitHub ↗
+              <a href="https://github.com/mdobaid311" target="_blank" rel="noopener noreferrer" className="hit-area link-draw">
+                GitHub{" "}
+                <span aria-hidden className="arrow-ne">
+                  ↗
+                </span>
               </a>
             </p>
           </div>
         </motion.div>
+
+        {!reduce && (
+          <motion.p style={{ opacity: cueOpacity }} className="gutter absolute inset-x-0 bottom-6 text-sm text-dim md:bottom-8">
+            Scroll. Night falls.
+          </motion.p>
+        )}
 
         {/* Covers the stage; paint() clips it to the capsule and opens it as you scroll. */}
         <div ref={frame} aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden bg-ink [clip-path:inset(50%)]">
@@ -196,6 +227,8 @@ export default function Hero() {
             className="absolute inset-0 h-full w-full origin-top-left object-cover will-change-transform"
             style={{ objectPosition: `${POS.x * 100}% ${POS.y * 100}%` }}
           >
+            {/* TODO(asset): 1920px black-and-white loop. Add <source media="(min-width: 1024px)" src="/hero-1080.webm|.mp4"> here,
+                then update CLIP and re-tune FOCUS and POS (encode commands in docs/REVAMP-PLAN.md, 1.3). */}
             <source src="/hero.webm" type="video/webm" />
             <source src="/hero.mp4" type="video/mp4" />
           </video>

@@ -1,18 +1,34 @@
 @import "tailwindcss";
 
 @theme {
+  /* literal, never change by tone */
   --color-paper: #eeebe4;
-  --color-card: #e5e1d8;
   --color-ink: #121212;
-  --color-muted: #6e6a63;
-  --color-rule: rgba(18, 18, 18, 0.14);
-  --color-accent: #d9381e;
+  --color-accent: #d9381e; /* LED and sun only */
+
+  /* semantic, day values; [data-tone="night"] flips them */
+  --color-bg: var(--color-paper);
+  --color-fg: var(--color-ink);
+  --color-dim: #625e58; /* 5.4:1 on paper */
+  --color-line: rgb(18 18 18 / 0.14);
+  --color-surface: #e5e1d8;
+  --color-signal: #b02c17; /* small accent-coloured text */
+
+  /* Type scale. Display sizes are fluid; line-height comes from display-type. */
+  --text-statement: clamp(1.9rem, 4.2vw, 4.25rem);
+  --text-section: clamp(2.25rem, 4.6vw, 4.5rem);
+  /* cqi: the hero text block is a size container, so "I build web software" spans about 98% of the content width. */
+  --text-hero: clamp(2.75rem, 11cqi, 13rem);
+  --text-title: clamp(2.4rem, 5.6vw, 6.5rem);
+  --text-subtitle: clamp(1.75rem, 2.6vw, 2.6rem);
+  --text-mega: clamp(1.5rem, 8.2vw, 10rem);
 
   --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
   --default-transition-timing-function: var(--ease-out-expo);
 
   --animate-rise: rise 1.1s var(--ease-out-expo) both;
@@ -22,18 +38,45 @@
   }
 }
 
+[data-tone="night"] {
+  --color-bg: var(--color-ink);
+  --color-fg: var(--color-paper);
+  --color-dim: #9b968d; /* about 6:1 on ink */
+  --color-line: rgb(238 235 228 / 0.16);
+  --color-surface: #1b1b1b;
+  --color-signal: #ff6b4a; /* about 6.5:1 on ink */
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
 html {
-  background: var(--color-paper);
+  background: var(--color-bg);
   scrollbar-width: thin;
-  scrollbar-color: var(--color-muted) var(--color-paper);
+  scrollbar-color: var(--color-dim) var(--color-bg);
+}
+
+/* The mobile menu covers the page; keep the page from scrolling behind it. */
+html:has(dialog[open]) {
+  overflow: hidden;
 }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-bg);
+  color: var(--color-fg);
   font-family: var(--font-sans);
   font-feature-settings: "ss01";
   overflow-x: clip;
+}
+
+/* Film grain over everything: the paper reads as paper, the ink as a print. Static, so it costs one layer. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 :focus-visible {
@@ -45,6 +88,13 @@ body {
   background: var(--color-ink);
   color: var(--color-paper);
 }
+[data-tone="night"] ::selection {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Word light-up: each span fades in as --p (0..1) passes its index --i of --n. */
+.lit > span { opacity: clamp(0.22, calc(var(--p, 0) * var(--n) - var(--i)), 1); }
 
 @utility display-type {
   font-family: var(--font-display);
@@ -61,14 +111,37 @@ body {
   }
 }
 
-/* Underline that draws in from the left on hover. Thickness via --line. */
+/* Underline that draws in from the left on hover and leaves to the right, rather than rewinding.
+   Thickness via --line. Touch screens skip the hover state; keyboard focus still draws it. */
 @utility link-draw {
-  background: linear-gradient(currentColor, currentColor) 0 100% / 0% var(--line, 1px) no-repeat;
-  transition: background-size 0.7s var(--ease-out-expo), color 0.3s;
-  &:hover,
+  background: linear-gradient(currentColor, currentColor) 100% 100% / 0% var(--line, 1px) no-repeat;
+  transition: background-size 0.45s var(--ease-out-expo), color 0.3s;
   &:focus-visible {
+    background-position: 0 100%;
     background-size: 100% var(--line, 1px);
   }
+  @media (hover: hover) {
+    &:hover {
+      background-position: 0 100%;
+      background-size: 100% var(--line, 1px);
+    }
+  }
+}
+
+/* Arrow glyphs inside links nudge the way they point. Wrap the glyph: <span aria-hidden class="arrow-ne">↗</span>. */
+.arrow-ne,
+.arrow-e,
+.arrow-n {
+  display: inline-block;
+  transition: translate 0.35s var(--ease-out-expo);
+}
+a:focus-visible .arrow-ne { translate: 0.12em -0.12em; }
+a:focus-visible .arrow-e { translate: 0.25em 0; }
+a:focus-visible .arrow-n { translate: 0 -0.15em; }
+@media (hover: hover) {
+  a:hover .arrow-ne { translate: 0.12em -0.12em; }
+  a:hover .arrow-e { translate: 0.25em 0; }
+  a:hover .arrow-n { translate: 0 -0.15em; }
 }
 
 @utility mono-label {
@@ -94,6 +167,10 @@ body {
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
+  }
+  body::after {
+    display: none;
   }
 }
 
@@ -106,26 +183,27 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .lit > span { opacity: 1; }
 }
 
 /* ---------- blog post ---------- */
 
-.post { line-height: 1.75; color: var(--color-ink); font-family: var(--font-sans); font-size: 1.125rem; }
+.post { line-height: 1.75; color: var(--color-fg); font-family: var(--font-sans); font-size: 1.125rem; }
 .post > * + * { margin-top: 1.25rem; }
-.post h2 { font-weight: 600; font-size: 1.875rem; line-height: 1.1; margin-top: 3.5rem; letter-spacing: -0.03em; scroll-margin-top: 2rem; }
+.post h2 { font-weight: 600; font-size: 1.875rem; line-height: 1.1; margin-top: 3.5rem; letter-spacing: -0.03em; scroll-margin-top: 5rem; }
 .post h3 { font-weight: 600; font-size: 1.3rem; margin-top: 2rem; letter-spacing: -0.02em; }
-.post a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+.post a { color: var(--color-signal); text-decoration: underline; text-underline-offset: 3px; }
 .post ul, .post ol { padding-left: 1.5rem; }
 .post ul { list-style: disc; }
 .post ol { list-style: decimal; }
 .post li + li { margin-top: 0.4rem; }
 .post code, .post pre { font-family: var(--font-mono); }
-.post code { overflow-wrap: anywhere; font-size: 0.8em; background: var(--color-card); padding: 0.1em 0.35em; border-radius: 3px; }
+.post code { overflow-wrap: anywhere; font-size: 0.8em; background: var(--color-surface); padding: 0.1em 0.35em; border-radius: 3px; }
 .post pre { background: #161616; color: #e9e6df; padding: 1rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.6; border-radius: 6px; }
 .post pre code { background: none; padding: 0; font-size: inherit; }
-.post img { width: 100%; height: auto; border: 1px solid var(--color-rule); border-radius: 6px; }
+.post img { width: 100%; height: auto; border: 1px solid var(--color-line); border-radius: 6px; }
 .post figure { margin-top: 1.75rem; }
-.post figcaption { margin-top: 0.5rem; font-size: 0.875rem; color: var(--color-muted); }
+.post figcaption { margin-top: 0.5rem; font-size: 0.875rem; color: var(--color-dim); }
 
 /* code blocks: language label and copy button (the button is added by PostEnhancer) */
 .code { position: relative; }
@@ -135,10 +213,43 @@ body {
 .code .copy:hover { color: #fff; }
 .shiki, .shiki span { color: var(--shiki-dark); }
 
-.post details.fold { border: 1px solid var(--color-rule); padding: 0 1.25rem; border-radius: 6px; }
-.post details.fold summary { cursor: pointer; padding: 1rem 0; font-weight: 500; color: var(--color-muted); }
-.post details.fold summary:hover { color: var(--color-accent); }
-.post details.fold[open] summary { border-bottom: 1px solid var(--color-rule); margin-bottom: 1.25rem; }
+.post details.fold { border: 1px solid var(--color-line); padding: 0 1.25rem; border-radius: 6px; }
+.post details.fold summary { cursor: pointer; padding: 1rem 0; font-weight: 500; color: var(--color-dim); }
+.post details.fold summary:hover { color: var(--color-fg); }
+.post details.fold[open] summary { border-bottom: 1px solid var(--color-line); margin-bottom: 1.25rem; }
 .post table { width: 100%; border-collapse: collapse; font-size: 0.9rem; display: block; overflow-x: auto; }
-.post th, .post td { border: 1px solid var(--color-rule); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
-.post th { color: var(--color-muted); }
+.post th, .post td { border: 1px solid var(--color-line); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+.post th { color: var(--color-dim); }
+
+/* night tone: code blocks would sink into the ink, so they get the surface and a hairline */
+[data-tone="night"] .post pre { background: var(--color-surface); box-shadow: inset 0 0 0 1px var(--color-line); }
+
+/* ---------- case study body: 68ch of text in columns 5–11, the h2 labels hanging in columns 1–4 ---------- */
+
+.case { max-width: 68ch; }
+@media (width >= 64rem) {
+  .case { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 1.5rem; max-width: none; }
+  .case > * { grid-column: 5 / 12; max-width: 68ch; }
+  /* each label sits on the row of the paragraph that follows it */
+  .case > h2 { grid-column: 1 / 5; margin-top: 3.5rem; padding-right: 2rem; font-size: 1.25rem; line-height: 1.75rem; }
+  .case > h2 + * { margin-top: 3.5rem; }
+  .case > :first-child, .case > :first-child + * { margin-top: 0; }
+}
+
+/* ---------- page transitions (experimental.viewTransition) ---------- */
+
+/* Shared screen and title (named per slug): 600ms. Everything else cross-fades as the root in 300ms. */
+::view-transition-group(*) {
+  animation-duration: 600ms;
+  animation-timing-function: var(--ease-in-out-quart);
+}
+::view-transition-group(root) { animation-duration: 300ms; }
+/* Snapshots fill their box while it changes shape, so the title and screen never stretch. */
+::view-transition-old(*),
+::view-transition-new(*) { height: 100%; object-fit: cover; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}

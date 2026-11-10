@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -6,6 +6,7 @@ import "./globals.css";
 const schibsted = Schibsted_Grotesk({
   variable: "--font-schibsted",
   subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -14,17 +15,29 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mohammed Obaid | Full-Stack Software Engineer",
+  // Relative URLs below (canonical, og:url, the generated og:image) resolve against this.
+  metadataBase: new URL("https://www.mohammedobaid.in"),
+  title: {
+    default: "Mohammed Obaid | Full-Stack Software Engineer",
+    template: "%s | Mohammed Obaid",
+  },
   description:
     "Full-stack software engineer in Hyderabad, India. React and Next.js on the front, .NET and Node.js behind them, event-driven microservices and self-hosted Kubernetes.",
-  keywords: ["Mohammed Obaid", "Software Engineer", "Full-Stack Developer", "React", "Next.js", ".NET", "Hyderabad"],
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Mohammed Obaid | Full-Stack Software Engineer",
     description: "I build web software end to end, mostly after dark, from Hyderabad.",
-    url: "https://www.mohammedobaid.in",
+    url: "/",
     siteName: "Mohammed Obaid",
     type: "website",
+    locale: "en_IN",
   },
+  // The image itself comes from app/opengraph-image.tsx; X falls back to og:image.
+  twitter: { card: "summary_large_image", creator: "@mdobaid311" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#eeebe4",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -32,7 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${schibsted.variable} ${jetbrains.variable} antialiased`}>
       <body>
         <noscript>
-          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}"}</style>
         </noscript>
         <a
           href="#main"
