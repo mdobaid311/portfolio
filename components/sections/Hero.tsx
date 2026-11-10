@@ -52,6 +52,8 @@ export default function Hero() {
   const slotNarrow = useRef<HTMLSpanElement>(null);
   const frame = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
+  const arrow = useRef<HTMLSpanElement>(null);
+  const aim = useRef(0);
   const box = useRef({ x: 0, y: 0, w: 0, h: 0 });
   const progress = useRef(0);
   const reveal = useRef(0);
@@ -91,6 +93,9 @@ export default function Hero() {
     const tx = Math.max(x + w - s * W, Math.min(x, lerp(b.x + b.w / 2, fx, e) - s * fx));
     const ty = Math.max(y + h - s * H, Math.min(y, lerp(b.y + b.h / 2, fy, e) - s * fy));
     v.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+
+    // The cursor arrow lives in the capsule and is gone well before the footage opens.
+    if (arrow.current) arrow.current.style.opacity = String(Math.max(0, 1 - progress.current * 6));
   };
 
   useMotionValueEvent(grow, "change", (t) => {
@@ -113,6 +118,12 @@ export default function Hero() {
         y += n.offsetTop;
       }
       box.current = { x, y, w: s.offsetWidth, h: s.offsetHeight };
+      if (arrow.current) {
+        const a = arrow.current.style;
+        a.left = `${x + s.offsetWidth / 2}px`;
+        a.top = `${y + s.offsetHeight / 2}px`;
+        a.width = a.height = `${s.offsetHeight * 0.5}px`;
+      }
       progress.current = motionOff ? 0 : grow.get();
       paint();
     };
@@ -149,7 +160,19 @@ export default function Hero() {
     });
     if (section.current) io.observe(section.current);
 
+    // Point the arrow at the cursor. Angle accumulates by shortest turn so it never spins back through 360.
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || !arrow.current || !stage.current) return;
+      const r = stage.current.getBoundingClientRect();
+      const b = box.current;
+      const to = (Math.atan2(e.clientY - (r.top + b.y + b.h / 2), e.clientX - (r.left + b.x + b.w / 2)) * 180) / Math.PI;
+      aim.current += ((((to - aim.current) % 360) + 540) % 360) - 180;
+      arrow.current.style.transform = `rotate(${aim.current}deg)`;
+    };
+    if (!motionOff) window.addEventListener("pointermove", onMove);
+
     return () => {
+      window.removeEventListener("pointermove", onMove);
       wipe?.stop();
       ro.disconnect();
       io.disconnect();
@@ -192,8 +215,7 @@ export default function Hero() {
             <p className="text-sm">Available for new work</p>
             {/* TODO(confirm): bio wording, B5 copy deck. */}
             <p className="max-w-[46ch] text-pretty md:col-span-2">
-              Full-stack engineer in Hyderabad. React and Next.js in front, .NET and Node.js behind, Kubernetes underneath. By day
-              I build asset-uptime software for rail, aviation and maritime at Smartquip.
+              A Software Engineer
             </p>
             <p className="flex gap-5 text-sm md:justify-end">
               <a href={`mailto:${profile.email}`} className="hit-area link-draw">
@@ -234,6 +256,14 @@ export default function Hero() {
           </video>
           {!reduce && (
             <>
+              <span
+                ref={arrow}
+                className="absolute hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-paper text-ink transition-transform duration-150 ease-out [@media(hover:hover)]:flex"
+              >
+                <svg viewBox="0 0 24 24" className="h-1/2 w-1/2" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 12h16M14 6l6 6-6 6" />
+                </svg>
+              </span>
               {/* Vignette pulls the eye to the lit monitors once the frame is open. */}
               <motion.div
                 style={{ opacity: shadeOpacity }}
